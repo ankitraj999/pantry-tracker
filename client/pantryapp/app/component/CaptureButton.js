@@ -1,7 +1,7 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
 import { uploadImage, addProduct } from '../utils/firebase';
-
+import Link from 'next/link';
 export default function CaptureButton({ onCapture }) {
   const [capturing, setCapturing] = useState(false);
   const [streamActive, setStreamActive] = useState(false);
@@ -167,6 +167,11 @@ export default function CaptureButton({ onCapture }) {
       >
         {capturing ? 'Capturing...' : 'Capture Product'}
       </button>
+      <Link href="/recipepage">
+          <button className="px-6 py-3 rounded-lg text-white font-semibold bg-blue-600 hover:bg-blue-700 ml-8">
+            Recommend Recipes
+          </button>
+        </Link>
       {streamActive && (
         <button
           onClick={closeCamera}

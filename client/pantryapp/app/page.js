@@ -6,7 +6,7 @@ import CaptureButton from './component/CaptureButton';
 import ProductCard from './component/ProductCard';
 import SearchBar from './component/SearchBar';
 import { getProducts, deleteProduct } from './utils/firebase';
-import Link from 'next/link';
+
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -42,17 +42,13 @@ export default function Home() {
       <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">
         Product Inventory
       </h1>
+     
       <div className="max-w-3xl mx-auto mb-4">
         <SearchBar setSearchTerm={setSearchTerm} />
       </div>
-      <div className="text-center mb-4">
+      <div className="flex justify-center text-center mt-4">
         <CaptureButton onCapture={fetchProducts} />
-        {/* Add the new button next to CaptureButton */}
-        <Link href="/recipepage">
-          <button className="px-6 py-3 rounded-lg text-white font-semibold bg-blue-600 hover:bg-blue-700 ml-8">
-            Recommend Recipes
-          </button>
-        </Link>
+        
     
       </div>
 
