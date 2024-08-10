@@ -48,17 +48,20 @@ export default function CaptureButton({ onCapture }) {
 
   const captureImage = async () => {
     setCapturing(true);
+  
     try {
 
       // Close any existing camera stream
       closeCamera();
+     
       const stream = await navigator.mediaDevices.getUserMedia({ video:
         {
           facingMode: 'environment', // Use back camera on mobile devices
           width: { ideal: 1280 }, // Adjust resolution if needed
           height: { ideal: 720 }
         } });
-
+      
+      console.log("creating video element")
       const video = document.createElement('video');
       video.srcObject = stream;
       video.autoplay = true;
@@ -75,39 +78,32 @@ export default function CaptureButton({ onCapture }) {
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
       canvas.getContext('2d').drawImage(video, 0, 0);
-
+    
       const imageDataUrl = canvas.toDataURL('image/jpeg');
       const imageFile = dataURLtoFile(imageDataUrl, 'captured_image.jpg');
 
       const imageUrl = await uploadImage(imageFile);
-      console.log(imageUrl)
-      
+      // console.log(imageUrl)
+     
       // Post image to your API and get product details
-    // const productDetails = await postImageFile(imageFile);
-    // console.log("Product details:", productDetails);
+     const productDetails = await postImageFile(imageFile);
 
-    // // Use the retrieved product details instead of hardcoded data
-    // const productData = {
-    //   Brand: productDetails.Brand || "",
-    //   Category: productDetails.Category || "",
-    //   "Estimated Quantity": productDetails["Estimated Quantity"] || "",
-    //   Expiration: productDetails.Expiration || "",
-    //   "Item Name": productDetails["Item Name"] || "",
-    // };
-      // const data=postImageFile(imageFile)
-      // console.log(imageDataUrl)
-      // console.log("ankit")
-      // console.log(data)
-
-
-
-      const productData = {
-        Brand: "Carbotrol",
-        Category: "Fruit",
-        "Estimated Quantity": "105 oz. (2.98 kg)",
-        Expiration: "",
-        "Item Name": "Apple"
-      };
+    //Use the retrieved product details instead of hardcoded data
+    const productData = {
+      Brand: productDetails.Brand || "",
+      Category: productDetails.Category || "",
+      "Estimated Quantity": productDetails["Estimated Quantity"] || "",
+      Expiration: productDetails.Expiration || "",
+      "Item Name": productDetails["Item Name"] || "",
+    };
+      
+      // const productData = {
+      //   Brand: "Carbotrol",
+      //   Category: "Fruit",
+      //   "Estimated Quantity": "105 oz. (2.98 kg)",
+      //   Expiration: "",
+      //   "Item Name": "Apple"
+      // };
 
       await addProduct(productData, imageUrl);
       onCapture();

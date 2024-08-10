@@ -54,6 +54,8 @@ def upload_image():
             # Process the image
             result = analyze_image(filepath)
             os.remove(filepath)
+            
+            print(f"product details: {result}")
             return result
         except Exception as e:
             print(f"Error saving image: {e}")

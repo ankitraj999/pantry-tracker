@@ -24,19 +24,34 @@ Please format your response as follows:
 4.. Brand: [If visible, identify the brand name]
 5. Expiration: [If visible, note the expiration date. If not, provide general guidance on shelf life] 
 
-Please analyze the image I've provided and give me these details in json format. If any of the above information is not found, leave blank.
+Ensure the JSON is properly formatted and does not include any extra commentary. If any of the above information is not found, leave blank.
 """
     response = model.generate_content([prompt, img])
 
     # Example response parsing (adjust based on actual response structure)
-    
+    # Store the first response
+    first_response = response.text
     jsonString="".join(response.text.split("\n")[1:-1])
-    json_string = jsonString
+   
 
     # Parse the JSON string
     try:
-        json_object = json.loads(json_string)
+        print("first response")
+        print(jsonString)
+        json_object = json.loads(jsonString)
+       
         return json_object
-    except json.JSONDecodeError as e:
-        return "Error parsing JSON"
-   
+    except json.JSONDecodeError:
+        # Inform the model that the response is not in JSON format
+        error_prompt = f"""The response provided is not in JSON format. Please ensure the response is formatted as JSON. This is the first response: {jsonString}"""
+       
+        secondresponse = model.generate_content([error_prompt, img])
+        jsonString="".join(response.text.split("\n")[1:-1])
+        try:
+            print("second response")
+            print(jsonString)
+            json_object = json.loads(jsonString)
+            return json_object
+        except json.JSONDecodeError:
+            return "Error parsing JSON"
+

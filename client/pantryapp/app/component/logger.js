@@ -1,4 +1,4 @@
-import winston from 'winston';
+import {transports,winston} from 'winston';
 
 const logger = winston.createLogger({
   level: 'info', // Log level
@@ -7,8 +7,8 @@ const logger = winston.createLogger({
     winston.format.json()
   ),
   transports: [
-    new winston.transports.Console(), // Log to console
-  ],
+    new transports.Console()
+],
 });
 
 export default logger;

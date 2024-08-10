@@ -23,7 +23,8 @@ export const uploadImage = async (file) => {
 };
 
 export const addProduct = async (productData, imageUrl) => {
-  await addDoc(collection(db, 'products'), { ...productData, imageUrl });
+    await addDoc(collection(db, 'products'), { ...productData, imageUrl });
+ 
 };
 
 export const getProducts = async () => {
