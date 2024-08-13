@@ -2,6 +2,7 @@
 
 Pantry Tracker & Recipe Recommender is a web application that helps users manage their pantry inventory and get recipe recommendations based on available ingredients. It uses advanced AI technologies for product recognition and recipe generation.
 Url - https://pantry-client.vercel.app
+Demo - https://www.youtube.com/watch?v=orSUGsIBcwQ
 ## Features
 
 ### Pantry Tracking
